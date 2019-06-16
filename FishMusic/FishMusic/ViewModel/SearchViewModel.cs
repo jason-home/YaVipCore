@@ -11,6 +11,7 @@ using FishMusic.Model;
 using FishMusic.Model.Setting;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using Microsoft.VisualBasic;
 
 namespace FishMusic.ViewModel
 {
@@ -124,7 +125,7 @@ namespace FishMusic.ViewModel
             {
                 new SearchEngine {Key = "wy", Name = "网易音乐"},
                 new SearchEngine {Key = "xm", Name = "虾米音乐"},
-                new SearchEngine {Key = "qq", Name = "腾讯音乐"},
+                new SearchEngine {Key = "qq", Name = "ＱＱ音乐"},
                 new SearchEngine {Key = "kg", Name = "酷狗音乐"},
                 new SearchEngine {Key = "kw", Name = "酷我音乐"},
                 new SearchEngine {Key = "bd", Name = "百度音乐"},
@@ -133,7 +134,7 @@ namespace FishMusic.ViewModel
 
             HotWords = new List<string> {"布衣乐队", "丢火车", "α·Pav", "甜梅号", "田馥甄", "华晨宇", "林俊杰"};
 
-            SelectEngine = "xm";
+            SelectEngine = "qq";
             CurrentPage = "search";
             SearchResultCollection = null;
             SelectSong = new SongResult();
@@ -175,7 +176,9 @@ namespace FishMusic.ViewModel
                 return;
             }
             var songName = Helper.CommonHelper.RemoveSpecialChar(Helper.CommonHelper.GetSongName(_softSetting.DownSetting, songResult));
+            songName = Microsoft.VisualBasic.Strings.StrConv(songName, VbStrConv.TraditionalChinese, 1033);
             var songPath = Helper.CommonHelper.RemoveSpecialChar(Helper.CommonHelper.GetSongPath(_softSetting.DownSetting, songResult));
+            songPath = Microsoft.VisualBasic.Strings.StrConv(songPath, VbStrConv.TraditionalChinese, 1033);
             var filePath = Path.Combine(_softSetting.DownSetting.DownPath, songPath, songName + Helper.CommonHelper.GetFormat(downLink));
             if (File.Exists(filePath))
             {

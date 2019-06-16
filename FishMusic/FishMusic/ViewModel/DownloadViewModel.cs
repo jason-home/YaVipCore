@@ -19,6 +19,7 @@ using TagLib.Id3v2;
 using CommonHelper = AnyListen.Helper.CommonHelper;
 using File = TagLib.File;
 using Tag = TagLib.Id3v2.Tag;
+using Microsoft.VisualBasic;
 
 namespace FishMusic.ViewModel
 {
@@ -237,18 +238,22 @@ namespace FishMusic.ViewModel
                         }
                         if (!string.IsNullOrEmpty(songResult.SongName))
                         {
-                            tags.Title = songResult.SongName;
+                            tags.Title = Microsoft.VisualBasic.Strings.StrConv(songResult.SongName, VbStrConv.TraditionalChinese, 1033);
+                            //tags.Title = songResult.SongName;
                         }
                         if (!string.IsNullOrEmpty(songResult.ArtistName))
                         {
+                            songResult.ArtistName = Microsoft.VisualBasic.Strings.StrConv(songResult.ArtistName, VbStrConv.TraditionalChinese, 1033);
                             tags.Performers = songResult.ArtistName.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
                         }
                         if (!string.IsNullOrEmpty(songResult.AlbumName))
                         {
-                            tags.Album = songResult.AlbumName;
+                            tags.Album = Microsoft.VisualBasic.Strings.StrConv(songResult.AlbumName, VbStrConv.TraditionalChinese, 1033);
+                            //tags.Album = songResult.AlbumName;
                         }
                         if (!string.IsNullOrEmpty(songResult.AlbumArtist))
                         {
+                            songResult.AlbumArtist = Microsoft.VisualBasic.Strings.StrConv(songResult.AlbumArtist, VbStrConv.TraditionalChinese, 1033);
                             tags.AlbumArtists = songResult.AlbumArtist.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
                         }
                         if (songResult.TrackNum != 0)
@@ -256,7 +261,7 @@ namespace FishMusic.ViewModel
                             tags.Track = Convert.ToUInt32(songResult.TrackNum);
                         }
                         tags.Disc = Convert.ToUInt32(songResult.Disc);
-                        tags.Copyright = "鱼声音乐";
+                        tags.Copyright = "";
                         if (!string.IsNullOrEmpty(songResult.Year))
                         {
                             tags.Year = Convert.ToUInt32(songResult.Year.Substring(0, 4));
@@ -318,7 +323,7 @@ namespace FishMusic.ViewModel
                                 var picArr = new WebClient().DownloadData(AnyListen.AnyListen.GetRealUrl(songResult.PicUrl));
                                 var picture = new Picture
                                 {
-                                    Description = "luooqi",
+                                    Description = "CD-Cover",
                                     MimeType = MediaTypeNames.Image.Jpeg,
                                     Type = PictureType.FrontCover,
                                     Data = new ByteVector(picArr, picArr.Length)
